@@ -24,6 +24,13 @@
             <argument id="shopware_storefront.context_service" type="service"/>
         </service>
 
+        <service class="FroshShareBasket\Subscriber\Account" id="frosh_share_basket.subscriber.account">
+            <argument id="session" type="service"/>
+            <argument id="shopware_storefront.context_service" type="service"/>
+            <!-- <argument id="frosh_share_basket.components.customer_basket_service" type="service"/> -->
+            <tag name="shopware.event_subscriber"/>
+        </service>
+
         <service class="FroshShareBasket\Subscriber\Analytics" id="frosh_share_basket.subscriber.analytics">
             <argument>%frosh_share_basket.plugin_dir%</argument>
             <tag name="shopware.event_subscriber"/>

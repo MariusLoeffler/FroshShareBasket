@@ -6,6 +6,7 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Shopware\Components\Model\ModelEntity;
+use Shopware\Models\Customer\Customer;
 
 /**
  * @ORM\Entity
@@ -23,6 +24,21 @@ class Basket extends ModelEntity
      * @ORM\OneToMany(targetEntity="FroshShareBasket\Models\Article", mappedBy="basket", cascade={"persist"})
      */
     protected $articles;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Shopware\Models\Customer\Customer")
+     * @ORM\JoinTable(
+     *  name="s_plugin_sharebasket_basket_customer",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="basket_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="customer_id", referencedColumnName="id")
+     *  }
+     * )
+     */
+    protected $customers;
 
     /**
      * Unique identifier
@@ -69,6 +85,7 @@ class Basket extends ModelEntity
     public function __construct()
     {
         $this->articles = new ArrayCollection();
+        $this->customers = new ArrayCollection();
     }
 
     /**
@@ -85,6 +102,58 @@ class Basket extends ModelEntity
     public function setArticles($articles)
     {
         $this->articles = $articles;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCustomers()
+    {
+        return $this->customers;
+    }
+
+    /**
+     * @param ArrayCollection $customers
+     */
+    public function setCustomers($customers)
+    {
+        $this->customers = $customers;
+    }
+
+    /**
+     * @param Customer $customer
+     *
+     * @return $this
+     */
+    public function addCustomer(Customer $customer)
+    {
+        $this->customers->add($customer);
+
+        return $this;
+    }
+
+    /**
+     * @param Customer $customer
+     *
+     * @return $this
+     */
+    public function removeCustomer(Customer $customer)
+    {
+        $this->customers->removeElement($customer);
+
+        return $this;
+    }
+
+    /**
+     * @param Customer $customer
+     *
+     * @return bool
+     */
+    public function hasCustomer(Customer $customer)
+    {
+        return $this->customers->exists(function ($key, $value) use ($customer) {
+            return $value->getId() == $customer->getId();
+        });
     }
 
     /**

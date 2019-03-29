@@ -42,6 +42,15 @@
             <description lang="en">Enables the native sharing feature on supported devices.</description>
         </element>
 
+        <element scope="shop" type="boolean">
+            <name>froshShareBasketShowCartsInAccount</name>
+            <label lang="de">Gespeicherte Warenkörbe im Account anzeigen</label>
+            <label lang="en">Show saved carts in the customer account</label>
+            <value>false</value>
+            <description lang="de">Ermöglicht es die gespeicherten Warenkörbe, im Account aufzurufen und erneut zu teilen/laden. Nur für eingeloggte User.</description>
+            <description lang="en">Show the saved carts in the customer account, to share and load them again. Only for loggedin users.</description>
+        </element>
+
         <element type="combo">
             <name>attributesToStore</name>
             <label lang="de">Zusätzliche Felder speichern</label>

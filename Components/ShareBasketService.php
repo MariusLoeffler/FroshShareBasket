@@ -8,6 +8,7 @@ use FroshShareBasket\Models\Basket;
 use Shopware\Bundle\StoreFrontBundle\Service\ContextServiceInterface;
 use Shopware\Components\Model\ModelManager;
 use Shopware\Components\Routing\Router;
+use Shopware\Models\Customer\Customer;
 
 class ShareBasketService implements ShareBasketServiceInterface
 {
@@ -131,13 +132,21 @@ class ShareBasketService implements ShareBasketServiceInterface
 
         $hash = $data['hash'];
 
+        // TODO: Do we want this?
+        $customerId = $this->session->offsetGet('sUserId') ?: $this->session->offsetGet('auto-user');
+
         $basket = $this->modelManager->getRepository(Basket::class)->findOneBy(['hash' => $hash]);
+        $customer = $this->modelManager->getRepository(Customer::class)->findOneById($customerId);
 
         if ($basket !== null) {
             $basket->setCreated(new \DateTime());
 
             if ($this->session->offsetGet('froshShareBasketHash') !== $hash) {
                 $basket->increaseSaveCount();
+
+                if ($customer instanceof Customer && !$basket->hasCustomer($customer)) {
+                    $basket->addCustomer($customer);
+                }
             }
 
             $this->modelManager->flush();
@@ -156,6 +165,10 @@ class ShareBasketService implements ShareBasketServiceInterface
         $basketModel->setCreated(new \DateTime());
         $basketModel->setHash($hash);
         $basketModel->setShopId($this->context->getShopContext()->getShop()->getId());
+
+        if ($customer instanceof Customer) {
+            $basket->addCustomer($customer);
+        }
 
         try {
             return $this->persistShareBasket($basketModel, $this->generateBasketId());
