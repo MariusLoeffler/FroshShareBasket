@@ -4,7 +4,7 @@ namespace FroshShareBasket\Struct;
 
 use Shopware\Bundle\StoreFrontBundle\Struct\Extendable;
 
-class Cart extends Extendable
+class Basket extends Extendable
 {
     /**
      * @var int
@@ -17,9 +17,19 @@ class Cart extends Extendable
     protected $basketId;
 
     /**
+     * @var string
+     */
+    protected $hash;
+
+    /**
+     * @var int
+     */
+    protected $saveCount;
+
+    /**
      * @var Item[]
      */
-    protected $items;
+    protected $items = [];
 
     /**
      * @param int $id
@@ -62,6 +72,46 @@ class Cart extends Extendable
     }
 
     /**
+     * @param string $hash
+     *
+     * @return $this
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @param int $saveCount
+     *
+     * @return $this
+     */
+    public function setSaveCount($saveCount)
+    {
+        $this->saveCount = $saveCount;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSaveCount()
+    {
+        return $this->saveCount;
+    }
+
+    /**
      * @param Item[] $items
      *
      * @return $this
@@ -79,5 +129,17 @@ class Cart extends Extendable
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * @param Item $item
+     *
+     * @return $this
+     */
+    public function addItem($item)
+    {
+        $this->items[] = $item;
+
+        return $this;
     }
 }

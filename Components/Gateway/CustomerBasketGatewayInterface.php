@@ -1,10 +1,10 @@
 <?php
 
-namespace FroshShareBasket\Components;
+namespace FroshShareBasket\Components\Gateway;
 
 use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
 
-interface CustomerBasketServiceInterface
+interface CustomerBasketGatewayInterface
 {
     /**
      * @param int $customerId

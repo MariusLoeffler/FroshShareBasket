@@ -167,7 +167,7 @@ class ShareBasketService implements ShareBasketServiceInterface
         $basketModel->setShopId($this->context->getShopContext()->getShop()->getId());
 
         if ($customer instanceof Customer) {
-            $basket->addCustomer($customer);
+            $basketModel->addCustomer($customer);
         }
 
         try {
