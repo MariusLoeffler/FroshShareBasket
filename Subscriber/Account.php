@@ -4,6 +4,7 @@ namespace FroshShareBasket\Subscriber;
 
 use Enlight\Event\SubscriberInterface;
 use Enlight_Components_Session_Namespace as Session;
+use FroshShareBasket\Components\Service\CustomerBasketServiceInterface;
 use Shopware\Bundle\StoreFrontBundle\Service\ContextServiceInterface;
 
 class Account implements SubscriberInterface
@@ -18,12 +19,16 @@ class Account implements SubscriberInterface
      */
     private $contextService;
 
+    private $customerBasketService;
+
     public function __construct(
         Session $session,
-        ContextServiceInterface $contextService
+        ContextServiceInterface $contextService,
+        CustomerBasketServiceInterface $customerBasketService
     ) {
         $this->session = $session;
         $this->contextService = $contextService;
+        $this->customerBasketService = $customerBasketService;
     }
 
     public static function getSubscribedEvents()
@@ -40,10 +45,10 @@ class Account implements SubscriberInterface
         $view = $controller->View();
         $request = $controller->Request();
 
-    /*    $view->froshSavedCarts = $this->customerBasketService->getList(
+        $view->froshSavedCarts = $this->customerBasketService->getList(
             $this->session->offsetGet('sUserId'),
             $this->contextService->getShopContext()
-        ); */
+        );
 
         return true;
     }

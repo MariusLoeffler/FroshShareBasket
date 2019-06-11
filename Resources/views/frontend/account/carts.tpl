@@ -33,7 +33,27 @@
         {else}
             {block name="frontend_account_carts_list"}
                 {foreach $froshSavedCarts as $cart}
-                    {$cart->getId()}
+                    {block name="frontend_account_carts_list_product_box"}
+                        <div class="panel--body is--wide">
+                        {foreach $cart->getItems() as $item}
+                            <p>{$item->getQuantity()} x {$item->getProduct()->getName()}</p>
+                        {/foreach}
+                        </div>
+                    {/block}
+                    {block name="frontend_account_carts_button_buy"}
+                        <a href="{url controller=''}loadBasket/{$cart->getBasketId()}" class="buybox--button block btn is--primary is--icon-right is--center is--large">
+                            {block name="frontend_listing_product_box_button_buy_button_text"}
+                                {s namespace="frontend/listing/box_article" name="ListingBuyActionAdd"}{/s}<i class="icon--basket"></i> <i class="icon--arrow-right"></i>
+                            {/block}
+                        </a>
+                    {/block}
+                    {*{block name="frontend_account_carts_button_buy"}*}
+                        {*<a href="{url controller='FroshShareBasket' action='load' bID=$cart->getBasketId()}" class="buybox--button block btn is--primary is--icon-right is--center is--large">*}
+                            {*{block name="frontend_listing_product_box_button_buy_button_text"}*}
+                                {*{s namespace="frontend/listing/box_article" name="ListingBuyActionAdd"}{/s}<i class="icon--basket"></i> <i class="icon--arrow-right"></i>*}
+                            {*{/block}*}
+                        {*</a>*}
+                    {*{/block}*}
                 {/foreach}
             {/block}
         {/if}

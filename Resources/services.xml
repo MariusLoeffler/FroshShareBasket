@@ -24,6 +24,23 @@
             <argument id="shopware_storefront.context_service" type="service"/>
         </service>
 
+        <service class="FroshShareBasket\Components\Gateway\Hydrator\BasketHydrator"
+                 id="frosh_share_basket.components.gateway.hydrator.basket_hydrator">
+        </service>
+
+        <service class="FroshShareBasket\Components\Gateway\CustomerBasketGateway"
+                 id="frosh_share_basket.components.gateway.customer_basket_gateway">
+            <argument id="dbal_connection" type="service"/>
+            <argument id="frosh_share_basket.components.gateway.hydrator.basket_hydrator" type="service"/>
+        </service>
+
+        <service class="FroshShareBasket\Components\Service\CustomerBasketService"
+                 id="frosh_share_basket.components.service.customer_basket_service">
+            <argument id="frosh_share_basket.components.gateway.customer_basket_gateway" type="service"/>
+            <argument id="shopware_storefront.list_product_service" type="service"/>
+        </service>
+
+
         <service class="FroshShareBasket\Subscriber\Account" id="frosh_share_basket.subscriber.account">
             <argument id="session" type="service"/>
             <argument id="shopware_storefront.context_service" type="service"/>

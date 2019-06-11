@@ -3,7 +3,7 @@
 namespace FroshShareBasket\Components\Gateway;
 
 use Doctrine\DBAL\Connection;
-use FroshShareBasket\Struct\Cart;
+use FroshShareBasket\Struct\Basket;
 use FroshShareBasket\Struct\Item;
 use Shopware\Bundle\StoreFrontBundle\Struct\ShopContextInterface;
 
@@ -31,7 +31,7 @@ class CustomerBasketGateway implements CustomerBasketGatewayInterface
         while ($row = $stmt->fetch(\PDO::FETCH_ASSOC)) {
             $key = $row['__basket_basketId'];
 
-            if (!$result[$key] instanceof Cart) {
+            if (!$result[$key] instanceof Basket) {
                 $result[$key] = $this->basketHydrator->hydrateBasket($row);
             }
 
