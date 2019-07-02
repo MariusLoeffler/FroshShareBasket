@@ -10,7 +10,8 @@
         init: function () {
             var me = this;
 
-            new ClipboardJS('[data-clipboard-target]');
+            new ClipboardJS('[data-clipboard-target], [data-clipboard-text]');
+
             me._on(me.opts.formSelector, 'submit', $.proxy(me.onSubmitForm, me));
             me.initWebShare();
         },

@@ -86,6 +86,21 @@ class Shopware_Controllers_Frontend_FroshShareBasket extends Enlight_Controller_
         }
     }
 
+    public function deleteCustomerBasketAction()
+    {
+        $basketId = $this->Request()->getParams()['basketID'];
+
+        $customerBasketService = $this->container->get('frosh_share_basket.components.service.customer_basket_service');
+        $customerBasketService->deleteBasket($basketId);
+
+        $this->redirect(
+            [
+                'controller' => 'account',
+                'action' => 'carts',
+            ]
+        );
+    }
+
     /**
      * @param string $basketId
      * @param string $field
